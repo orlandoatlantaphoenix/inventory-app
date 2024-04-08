@@ -25,4 +25,17 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+//CREATE new item
+router.post('/', async (req, res, next) => {
+    try {
+        const { name, description, price, category, image } = req.body;
+        const newItem = await Item.create({ name, description, price, category, image });
+        !newItem ? res.status(400).json({ message: `Item Not Created` }) :
+            res.status(201).json(newItem);
+    } catch (error) {
+        res.status(500).json({ message: `Server Error`});
+        next(error);
+    }
+})
+
 module.exports = router;
