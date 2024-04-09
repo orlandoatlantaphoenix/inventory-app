@@ -1,14 +1,13 @@
 import React from "react";
 import { Item } from "./Item";
 
-export const ItemList = ({items, setCurrentItemId}) => {
+export const ItemList = ({items, currentItem, setCurrentItem}) => {
 
     return (
         <>
             {items.map((item, key) => (
                 <>
-                    <Item  item={item} key={key} setCurrentItemId={setCurrentItemId}/>
-                    <button onClick={() => setCurrentItemId(item.id)}>View</button> 
+                    <Item  key={key} item={item} currentItem={currentItem} setCurrentItem={setCurrentItem}/>
                 </>
             ))}
         </>
