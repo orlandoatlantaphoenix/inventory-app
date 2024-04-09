@@ -42,13 +42,13 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
     try{
         const itemId = req.params.id;
-        const deletedItem = Item.destroy({
+        const deletedItem = await Item.destroy({
             where: {
                 id: itemId,
             }
         })
         if (deletedItem)
-            res.status(400).json({message: deletedItem.name + "has been deleted"})
+            res.status(400).json({message: deletedItem.name + "has been deleted!"})
         else
             res.status(500).json({message: "no item deleted"})
 
