@@ -12,7 +12,7 @@ export const App = () => {
 	const [items, setItems] = useState([]);
 	const [currentItem, setCurrentItem] = useState(undefined)
 	const [item, setItem ] = useState("")
-	const [toAdd, setToAdd] = useState(undefined)
+	const [toAdd, setToAdd] = useState(false)
 
 
 	async function fetchItems(){
@@ -40,7 +40,7 @@ export const App = () => {
 	useEffect(() => {
 		fetchItems();
 		
-	}, []);
+	}, [currentItem, toAdd]);
 	function handleClick () {
 		if (!toAdd){
 		setToAdd(true)
