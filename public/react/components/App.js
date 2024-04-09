@@ -21,11 +21,11 @@ export const App = () => {
 			const itemData = await response.json();
 			
 			setItems(itemData);
-
 		} catch (err) {
 			console.log("Oh no an error! ", err)
 		}
 	}
+
 	useEffect(() => {
 		fetchItems();
 		
@@ -65,5 +65,4 @@ export const App = () => {
 			<Item item={item} currentItem={currentItem} setCurrentItem={setCurrentItem}/>
 	)
 	}
-
 }
