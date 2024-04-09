@@ -26,6 +26,17 @@ export const App = () => {
 		}
 	}
 
+	async function fetchItem(){
+		try {
+			const response = await fetch(`${apiURL}/items/${currentItemId}`);
+			const itemData = await response.json();
+			
+			setItem(itemData);
+		} catch (err) {
+			console.log("Oh no an error! ", err)
+		}
+	}
+
 	useEffect(() => {
 		fetchItems();
 		
