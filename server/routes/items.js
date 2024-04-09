@@ -48,11 +48,32 @@ router.delete('/:id', async (req, res, next) => {
             }
         })
         if (deletedItem)
-            res.status(400).json({message: deletedItem.name + "has been deleted!"})
+            res.status(400).json({message: deletedItem.name + " has been deleted!"})
         else
             res.status(500).json({message: "no item deleted"})
 
     } catch (error){
+        res.status(500).json({ message: `Server Error`});
+        next(error);
+    }
+})
+
+//UPDATE one item
+router.put('/:id', async (req, res, next) => {
+    try {
+        const [updatedRowCount, updatedItem] = await Item.update(req.body, {
+            where: {
+                id: req.params.id
+            },
+            returning: true,
+        })
+
+        if (updatedItem)
+            res.status(400).json({message: "Item has been updated!"})
+        else
+            res.status(500).json({message: "no item updated"})
+
+    } catch (error) {
         res.status(500).json({ message: `Server Error`});
         next(error);
     }
