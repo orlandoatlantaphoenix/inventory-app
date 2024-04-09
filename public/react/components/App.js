@@ -10,6 +10,7 @@ export const App = () => {
 
 	const [items, setItems] = useState([]);
 	const [currentItemId, setCurrentItemId] = useState(null)
+	const [item, setItem ] = useState("")
 
 	async function fetchItems(){
 		try {
@@ -22,20 +23,40 @@ export const App = () => {
 		}
 	}
 
+	async function fetchItem(){
+		try {
+			const response = await fetch(`${apiURL}/items/${currentItemId}`);
+			const itemData = await response.json();
+			
+			setItem(itemData);
+		} catch (err) {
+			console.log("Oh no an error! ", err)
+		}
+	}
+
 	useEffect(() => {
 		fetchItems();
+		
 	}, []);
 	console.log(currentItemId);
-	return (
-		<main>	
-      <h1>Store</h1>
-			{currentItemId === null ? (
-				<>
-					<h2>Our inventory is 🔥</h2>
-					<ItemList items={items} setCurrentItemId={setCurrentItemId}/>	
-				</>
-			) : (<Item itemId={currentItemId}/>)}
-			
-		</main>
-	)
+	
+	if (!currentItemId){
+		return (
+			<main>	
+		<h1>Store</h1>
+		
+					<>
+						<h2>Our inventory is 🔥</h2>
+						<ItemList items={items} setCurrentItemId={setCurrentItemId}/>	
+					</>
+
+				
+			</main>
+		)
+	} else {
+
+		fetchItem();
+		console.log(item)
+		return (<Item item={item}/>)
+	}
 }
