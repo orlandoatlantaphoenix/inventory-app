@@ -12,6 +12,7 @@ export const App = () => {
 	const [currentItemId, setCurrentItemId] = useState(null)
 	const [item, setItem ] = useState("")
 
+
 	async function fetchItems(){
 		try {
 			const response = await fetch(`${apiURL}/items`);
