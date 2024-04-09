@@ -5,12 +5,14 @@ import { SaucesList } from './SaucesList';
 import apiURL from '../api';
 import { ItemList } from './ItemList';
 import { Item } from './Item';
+import Form from './Form.js'
 
 export const App = () => {
 
 	const [items, setItems] = useState([]);
-	const [currentItemId, setCurrentItemId] = useState(null)
+	const [currentItem, setCurrentItem] = useState(undefined)
 	const [item, setItem ] = useState("")
+	const [toAdd, setToAdd] = useState(undefined)
 
 
 	async function fetchItems(){
@@ -24,43 +26,44 @@ export const App = () => {
 			console.log("Oh no an error! ", err)
 		}
 	}
-
-	async function fetchItem(){
-		try {
-			const response = await fetch(`${apiURL}/items/${currentItemId}`);
-			const itemData = await response.json();
-			
-			setItem(itemData);
-
-		} catch (err) {
-			console.log("Oh no an error! ", err)
-		}
-	}
-
 	useEffect(() => {
 		fetchItems();
 		
 	}, []);
-	console.log(currentItemId);
+	function handleClick () {
+		if (!toAdd){
+		setToAdd(true)
+		} else {
+			setToAdd(false)
+		}
+	}
 	
-	if (!currentItemId){
+	if (!currentItem){
 		return (
 			<main>	
-		<h1>Store</h1>
-		
-					<>
-						<h2>Our inventory is 🔥</h2>
-						<ItemList items={items} setCurrentItemId={setCurrentItemId}/>	
-					</>
+			<h1>Store</h1>
+			<h2>Our inventory is 🔥</h2>
+				{!toAdd
+					?(
+						<>
+							<button onClick={() => handleClick()}>Add to our inventory</button>
+							<ItemList items={items} setCurrentItem={setCurrentItem}/>
+						</>
 
-				
+				) :(
+					<>
+					<h3>Add To it!</h3>
+					<Form items={items} setItems={setItems}/>
+					<button onClick={handleClick}>Back</button>
+					</>
+					)}
 			</main>
 		)
 	} else {
 
-		fetchItem();
-		console.log(item)
-		return (<Item item={item}/>)
+		return (
+			<Item item={item} currentItem={currentItem} setCurrentItem={setCurrentItem}/>
+	)
 	}
 
 }
