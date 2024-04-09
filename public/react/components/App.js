@@ -19,7 +19,6 @@ export const App = () => {
 			const itemData = await response.json();
 			
 			setItems(itemData);
-
 		} catch (err) {
 			console.log("Oh no an error! ", err)
 		}
@@ -31,7 +30,6 @@ export const App = () => {
 			const itemData = await response.json();
 			
 			setItem(itemData);
-
 		} catch (err) {
 			console.log("Oh no an error! ", err)
 		}
@@ -62,5 +60,4 @@ export const App = () => {
 		console.log(item)
 		return (<Item item={item}/>)
 	}
-
 }
