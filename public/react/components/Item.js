@@ -17,9 +17,21 @@ export const Item = ({item, currentItem, setCurrentItem}) => {
         if (!currentItem) {
             fetchItem(id)
         } else {
-            setCurrentItem(undefined)
+            setCurrentItem(false)
         }
     } 
+
+    const handleDelete = async () => {
+        try {
+            await fetch(`${apiURL}/items/${currentItem.id}`, {
+                method: 'DELETE'
+            })
+            setCurrentItem(false);
+        } catch (error) {
+            console.log(error);
+            alert(`There was an error deleting your item`);
+        }
+    }
 
     return (
         <>
@@ -34,6 +46,7 @@ export const Item = ({item, currentItem, setCurrentItem}) => {
             </div>)
             :(
             <div>
+                <button onClick={handleDelete}>DELETE</button>
                 <img src={currentItem.image}></img>
                 <p><strong>{currentItem.name}</strong></p>
                 <p>{currentItem.description}</p>
