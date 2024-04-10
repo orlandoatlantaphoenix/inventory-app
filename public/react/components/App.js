@@ -11,26 +11,26 @@ export const App = () => {
 
 	const [items, setItems] = useState([]);
 	const [currentItem, setCurrentItem] = useState(undefined)
-	const [item, setItem ] = useState("")
+	const [item, setItem] = useState("")
 	const [toAdd, setToAdd] = useState(false)
 
 
-	async function fetchItems(){
+	async function fetchItems() {
 		try {
 			const response = await fetch(`${apiURL}/items`);
 			const itemData = await response.json();
-			
+
 			setItems(itemData);
 		} catch (err) {
 			console.log("Oh no an error! ", err)
 		}
 	}
 
-	async function fetchItem(){
+	async function fetchItem() {
 		try {
 			const response = await fetch(`${apiURL}/items/${currentItemId}`);
 			const itemData = await response.json();
-			
+
 			setItem(itemData);
 		} catch (err) {
 			console.log("Oh no an error! ", err)
@@ -39,41 +39,53 @@ export const App = () => {
 
 	useEffect(() => {
 		fetchItems();
-		
+
 	}, [currentItem, toAdd]);
-	function handleClick () {
-		if (!toAdd){
-		setToAdd(true)
+	function handleClick() {
+		if (!toAdd) {
+			setToAdd(true)
 		} else {
 			setToAdd(false)
 		}
 	}
-	
-	if (!currentItem){
-		return (
-			<main>	
-			<h1>Store</h1>
-			<h2>Our inventory is 🔥</h2>
-				{!toAdd
-					?(
-						<>
-							<button onClick={() => handleClick()}>Add to our inventory</button>
-							<ItemList items={items} setCurrentItem={setCurrentItem}/>
-						</>
 
-				) :(
-					<>
-					<h3>Add To it!</h3>
-					<Form items={items} setItems={setItems}/>
-					<button onClick={handleClick}>Back</button>
-					</>
-					)}
+	if (!currentItem) {
+		return (
+			<main>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-2 offset-md-10">
+							<button onClick={() => handleClick()}>Add to our inventory</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 offset-md-4">
+							<h1>Store</h1>
+							<h2>Our inventory is 🔥</h2>
+						</div>
+					</div>
+
+					{!toAdd
+						? (
+							<>
+								<ItemList items={items} setCurrentItem={setCurrentItem} />
+							</>
+						) : (
+							<>
+								<h3>Add To it!</h3>
+								<Form items={items} setItems={setItems} />
+								<button onClick={handleClick}>Back</button>
+							</>
+						)}
+
+
+				</div>
 			</main>
 		)
 	} else {
 
 		return (
-			<Item item={item} currentItem={currentItem} setCurrentItem={setCurrentItem}/>
-	)
+			<Item item={item} currentItem={currentItem} setCurrentItem={setCurrentItem} />
+		)
 	}
 }
