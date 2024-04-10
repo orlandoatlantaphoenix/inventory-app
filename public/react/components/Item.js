@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import apiURL from "../api";
+import UpdateForm from './UpdateForm.js'
+
 export const Item = ({item, currentItem, setCurrentItem}) => {
+    const [toUpdate, setToUpdate] = useState(false)
 
     async function fetchItem(id){
 		try {
@@ -32,6 +35,13 @@ export const Item = ({item, currentItem, setCurrentItem}) => {
             alert(`There was an error deleting your item`);
         }
     }
+    function handleUpdate() {
+        if (!toUpdate){
+            setToUpdate(true)
+        } else {
+            setToUpdate(false)
+        }
+    }
 
     return (
         <>
@@ -45,14 +55,26 @@ export const Item = ({item, currentItem, setCurrentItem}) => {
                 <button onClick={() => handleClick(item.id)}>View</button> 
             </div>)
             :(
-            <div>
-                <button onClick={handleDelete}>DELETE</button>
-                <img src={currentItem.image}></img>
-                <p><strong>{currentItem.name}</strong></p>
-                <p>{currentItem.description}</p>
-                <p>{currentItem.price}</p> 
-                <p>{currentItem.category}</p>
-                <button onClick = {() => handleClick(currentItem.id)}>Back</button>
+            <div> 
+                {!toUpdate
+                ?(
+                    <>
+                        <button onClick={handleDelete}>DELETE</button>
+                        <img src={currentItem.image} onClick = {() => handleClick(currentItem.id)}></img>
+                        <p><strong>{currentItem.name}</strong></p>
+                        <p>{currentItem.description}</p>
+                        <p>{currentItem.price}</p> 
+                        <p>{currentItem.category}</p>
+                        <button onClick = {() => handleClick(currentItem.id)}>Back</button>
+                        <button onClick = {() => handleUpdate()}>Change</button>
+                    </>
+                ):(
+                    <>
+                        <UpdateForm currentItem={currentItem} setCurrentItem={setCurrentItem}/>
+                        <button onClick = {() => handleUpdate()}>Back</button>
+                    </>
+                )
+                }
             </div>
             )}
         </>
