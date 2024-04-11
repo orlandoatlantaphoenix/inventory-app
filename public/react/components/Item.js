@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import apiURL from "../api";
 import UpdateForm from './UpdateForm.js'
 
-export const Item = ({item, currentItem, setCurrentItem}) => {
+export const Item = ({cart, setCart, item, currentItem, setCurrentItem}) => {
     const [toUpdate, setToUpdate] = useState(false)
 
     async function fetchItem(id){
@@ -43,6 +43,11 @@ export const Item = ({item, currentItem, setCurrentItem}) => {
         }
     }
 
+    const handleAddToCart = () => {
+        setCart([...cart, currentItem ])
+        alert(`Successfully added to cart`);
+    }
+
     return (
         <>
             { !currentItem
@@ -67,6 +72,7 @@ export const Item = ({item, currentItem, setCurrentItem}) => {
                         <p>{currentItem.category}</p>
                         <button onClick = {() => handleClick(currentItem.id)}>Back</button>
                         <button onClick = {() => handleUpdate()}>Change</button>
+                        <button onClick = {() => handleAddToCart()}>Add To Cart</button>
                     </>
                 ):(
                     <>
