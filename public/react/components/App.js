@@ -10,7 +10,7 @@ import Form from './Form.js'
 export const App = () => {
 
 	const [items, setItems] = useState([]);
-	const [currentItem, setCurrentItem] = useState(undefined)
+	const [currentItem, setCurrentItem] = useState(false)
 	const [item, setItem ] = useState("")
 	const [toAdd, setToAdd] = useState(false)
 
@@ -19,7 +19,7 @@ export const App = () => {
 		try {
 			const response = await fetch(`${apiURL}/items`);
 			const itemData = await response.json();
-			
+			console.log(itemData)
 			setItems(itemData);
 		} catch (err) {
 			console.log("Oh no an error! ", err)
@@ -30,6 +30,7 @@ export const App = () => {
 		fetchItems();
 		
 	}, [currentItem, toAdd]);
+
 	function handleClick () {
 		if (!toAdd){
 		setToAdd(true)
@@ -53,7 +54,7 @@ export const App = () => {
 				) :(
 					<>
 					<h3>Add To it!</h3>
-					<Form items={items} setItems={setItems}/>
+					<Form toAdd={toAdd} setToAdd={setToAdd}/>
 					<button onClick={handleClick}>Back</button>
 					</>
 					)}
@@ -62,7 +63,8 @@ export const App = () => {
 	} else {
 
 		return (
-			<Item item={item} currentItem={currentItem} setCurrentItem={setCurrentItem}/>
-	)
+				<Item item={item} currentItem={currentItem} setCurrentItem={setCurrentItem}/>
+		)
 	}
+
 }

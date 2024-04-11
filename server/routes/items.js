@@ -48,7 +48,7 @@ router.delete('/:id', async (req, res, next) => {
             }
         })
         if (deletedItem)
-            res.status(400).json({message: deletedItem.name + " has been deleted!"})
+            res.status(200).json({message: deletedItem.name + " has been deleted!"})
         else
             res.status(500).json({message: "no item deleted"})
 
@@ -69,7 +69,7 @@ router.put('/:id', async (req, res, next) => {
         })
 
         if (updatedItem)
-            res.status(400).json({message: "Item has been updated!"})
+            res.status(200).json({message: "Item has been updated!"})
         else
             res.status(500).json({message: "no item updated"})
 
