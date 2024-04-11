@@ -6,6 +6,7 @@ import { ItemList } from './ItemList';
 import { Item } from './Item';
 import Form from './Form.js'
 import Cart from './Cart.js'
+import { Search } from './Search.js';
 export const App = () => {
 
 	const [items, setItems] = useState([]);
@@ -14,6 +15,10 @@ export const App = () => {
 	const [toAdd, setToAdd] = useState(false)
 	const [viewCart, setViewCart] = useState(false)
 	const [cart, setCart] = useState([])
+	const [toSearch, setToSearch] = useState(false)
+	const [search, setSearch] = useState("")
+	const [searching, setSearching] = useState(false)
+
 	async function fetchItems() {
 		try {
 			const response = await fetch(`${apiURL}/items`);
@@ -48,21 +53,27 @@ export const App = () => {
 				<h2>Our inventory is 🔥</h2>
 				{ viewCart ? (<Cart setCart={setCart} setViewCart={setViewCart} cart={cart}/>) : 
 				(<>
-				{!toAdd
-					? (
-						<>
-							<button onClick={() => setViewCart(true)}>{cart.length > 0 ? `Cart (${cart.length})` : `Cart` }</button>
-							<button onClick={() => handleClick()}>Add to our inventory</button>
-							<ItemList items={items} setCurrentItem={setCurrentItem} />
-						</>
+					{toSearch ? (<Search items={items} search={search} 
+					setSearch={setSearch} setToSearch={setToSearch} searching={searching} 
+					setSearching={setSearching} currentItem={currentItem} setCurrentItem={setCurrentItem}/> )
+					: ( <>
+						 {!toAdd
+							? (
+								<>
+									<button onClick={() => setViewCart(true)}>{cart.length > 0 ? `Cart (${cart.length})` : `Cart` }</button>
+									<button onClick={() => handleClick()}>Add to our inventory</button>
+									<button onClick={() => setToSearch(true)}>Search</button>
+									<ItemList items={items} setCurrentItem={setCurrentItem} />
+								</>
 
-					) : (
-						<>
-							<h3>Add To it!</h3>
-							<Form toAdd={toAdd} setToAdd={setToAdd} />
-							<button onClick={handleClick}>Back</button>
-						</>
-					)}
+							) : (
+								<>
+									<h3>Add To it!</h3>
+									<Form toAdd={toAdd} setToAdd={setToAdd} />
+									<button onClick={handleClick}>Back</button>
+								</>
+							)}
+						</>)}
 				</>)}
 			</main>
 		)
