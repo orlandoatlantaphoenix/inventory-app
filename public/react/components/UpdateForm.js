@@ -1,11 +1,12 @@
 import { useState } from "react"
+import apiURL from "../api";
 
-function Form({toAdd, setToAdd}) {
-  const [name, setName] = useState("")
-  const [price, setPrice] = useState(Number)
-  const [description, setDescription] = useState("")
-  const [category, setCategory] = useState("") 
-  const [image, setImage] = useState("")
+function UpdateForm({currentItem, setCurrentItem}) {
+  const [name, setName] = useState(currentItem.name)
+  const [price, setPrice] = useState(currentItem.price)
+  const [description, setDescription] = useState(currentItem.description)
+  const [category, setCategory] = useState(currentItem.category) 
+  const [image, setImage] = useState(currentItem.image)
 
   async function submitHandler(e) {
     e.preventDefault()
@@ -17,49 +18,43 @@ function Form({toAdd, setToAdd}) {
       category,
       image,
     }
-  
-    await fetch('http://localhost:3000/api/items', {
-      method: "POST",
+    await fetch(`${apiURL}/items/${currentItem.id}`, {
+      method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(newItem)
     })
-
-    setName("")
-    setPrice(Number)
-    setDescription("")
-    setCategory("")
-    setImage("")
+    setCurrentItem(null)
   }
 
   return (
     <form onSubmit={submitHandler}>
       <input
         type="text"
-        placeholder="Name"
+        placeholder={currentItem.name}
         value={name}
         onChange={(e) => setName(e.target.value)}
         />
       <input
         type="number"
-        placeholder="Price"
+        placeholder={currentItem.price}
         value={price}
         onChange={(e) => setPrice(e.target.value)}
         />
         <input
           type="text"
-          placeholder="Category"
+          placeholder={currentItem.category}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         />
         <input
           type="text"
-          placeholder="Description"
+          placeholder={currentItem.description}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           />
         <input
           type="text"
-          placeholder="Image"
+          placeholder={currentItem.image}
           value={image}
           onChange={(e) => setImage(e.target.value)}
           />
@@ -69,5 +64,5 @@ function Form({toAdd, setToAdd}) {
 }
 
 export default
-  Form
+  UpdateForm
 
