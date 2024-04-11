@@ -32,13 +32,21 @@
 .item * {
   background-color: white;
   /* background-color: #C7EBF0; */
+  /* height: auto; */
+  /* max-height: 1000; */
+}
+
+.item p {
+  padding: 10px;
+  max-height: 1;
+  font-size: 12px;
 }
 
 .item button {
   background-color:#B5BDCF;
   font-weight: 500;
   width: 100%;
-  border-color: #C7EBF0;
+  border-color: #B5BDCF;
   border-radius: 5px; 
   transition: 0.3s;
 }
@@ -46,3 +54,7 @@
 .item button:hover {
   background-color:#C3E0E9;
 }
+
+/* .row-md-4 {
+  padding: 10;
+} */

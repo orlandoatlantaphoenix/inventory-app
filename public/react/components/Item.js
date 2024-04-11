@@ -42,14 +42,18 @@ export const Item = ({ item, currentItem, setCurrentItem }) => {
                             <div class="row-md-4 offset-md-2">
                                 <img class="thumbnail" src={item.image} onClick={() => handleClick(item.id)}></img>
                             </div>
-                            <div class="row-md-4 offset-md-2">
+                            <div class="row-md-4 offset-md-2 mx-auto">
                                 <p><strong>{item.name}</strong></p>
                             </div>
-                            <div class="row-md-4 offset-md-2">
+                            <div class="row row-md-4 offset-md-2 mt-5 mx-auto">
+                           
                                 <p>{item.price}</p>
+                               
+                                
                                 <p>{item.category}</p>
+                               
                             </div>
-                            <div class="row-md-2 offset-md-1">
+                            <div class="row-md-2 mt-4">
                                 <button onClick={() => handleClick(item.id)}>View</button>
                             </div>
                         </div>
