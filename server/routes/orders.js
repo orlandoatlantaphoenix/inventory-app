@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Order, Item, User } = require("../models/index");
+const { Order, Item } = require("../models/index");
 
 // GET /orders
 router.get("/", async (req, res, next) => {
@@ -12,17 +12,12 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-// CREATE /orders
+// CREATE /order
 router.post("/", async (req, res, next) => {
     try {
-        const { user, items } = req.body;
-        console.log(user)
-        const userToAdd = await User.findByPk(user.id);
-        if(!userToAdd) return res.status(404).json({ message: `Order Not Created, User Not Found`})
-
-        const newOrder = await Order.create({ user: userToAdd.name });
-        !newOrder ? res.status(400).json({ message: `Order Not Created`}) : 
-        await newOrder.setUser(userToAdd);
+        const { items, total } = req.body;
+        const newOrder = await Order.create({ user: null, total });
+        if(!newOrder) return res.status(400).json({ message: `Order Not Created`}); 
 
         if(!items){
             return res.status(201).json(newOrder);
@@ -40,5 +35,18 @@ router.post("/", async (req, res, next) => {
         next(error);
     }
 });
+
+// GET /orders/{orderId}
+router.get('/:id', async (req, res, next) => {
+    try {
+        const order = await Order.findByPk(req.params.id, { include: Item });
+        console.log(order)
+        !order ? res.status(404).json({ message: `Order Not Found`}) :
+            res.status(200).json(order)
+    } catch (error) {
+        res.status(500).json({ message: `Server Error`});
+        next(error);
+    }
+})
 
 module.exports = router;
