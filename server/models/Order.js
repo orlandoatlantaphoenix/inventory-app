@@ -1,8 +1,8 @@
-const {Sequelize} = require('sequelize')
+const {Sequelize } = require('sequelize')
 const {sequelize} = require('../db')
 
 const Order = sequelize.define("Order", {
-  name: Sequelize.STRING,
+  user: Sequelize.STRING,
 });
 
 module.exports = {
