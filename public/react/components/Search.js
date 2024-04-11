@@ -29,6 +29,7 @@ export const Search = ({items, search, setSearch, setToSearch, searching, setSea
     ):(
       <>
         {console.log('else')}
+        <h1>Search Results:</h1>
         {items.map ((item, key) =>{
           
           if(search === item.name || search === item.category || search === item.price) {

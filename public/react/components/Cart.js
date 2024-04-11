@@ -87,7 +87,7 @@ const Cart = ({ setCart, setViewCart, cart }) => {
                             <h1>Cart</h1>
                             <button onClick={() => setViewCart(false)}>Back</button>
                             <button onClick={handlePurchase}>Purchase</button>
-                            <h3>Total: {temp}</h3>
+                            <h3>Total: {total}</h3>
                             {cart.map((item, index) => {
                                 return (
                                     <section key={index}>
