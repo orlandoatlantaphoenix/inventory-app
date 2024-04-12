@@ -5,7 +5,8 @@ import UpdateForm from './UpdateForm.js'
 export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
     const [toUpdate, setToUpdate] = useState(false)
 
-    async function fetchItem(id) {
+
+    async function fetchItem(id) { // fetch item using GET request with params.id
         try {
             const response = await fetch(`${apiURL}/items/${id}`);
             const itemData = await response.json();
@@ -16,6 +17,8 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
         }
     }
 
+    // handleClick selects or unselects item
+
     function handleClick(id) {
         if (!currentItem) {
             fetchItem(id)
@@ -24,7 +27,7 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
         }
     }
 
-    const handleDelete = async () => {
+    const handleDelete = async () => { //onClick that handles delete request
         try {
             await fetch(`${apiURL}/items/${currentItem.id}`, {
                 method: 'DELETE'
@@ -35,7 +38,8 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
             alert(`There was an error deleting your item`);
         }
     }
-    function handleUpdate() {
+    function handleUpdate() { // onClick to handle update
+
         if (!toUpdate) {
             setToUpdate(true)
         } else {
@@ -43,7 +47,9 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
         }
     }
 
-    const handleAddToCart = () => {
+
+    const handleAddToCart = () => { // onClick adds current item to cart
+
         setCart([...cart, currentItem])
         alert(`Successfully added to cart`);
     }
@@ -51,7 +57,9 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
     return (
         <>
             {!currentItem
-                ? (
+
+                ? ( // renders single item if true
+
                     <div class="container item">
                         <div class="col">
                             <div class="row-md-4 offset-md-2">
@@ -76,12 +84,16 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
                 : (
                     <div>
                         {!toUpdate
-                            ? (
+
+                            ? ( // renders update form if true
+
                                 <>
                                     <div class="container current-item">
                                         <div class="col p-4 text-center">
                                             <div class="row">
-                                                <img class="img-fluid showcase-image"  src={currentItem.image} onClick={() => handleClick(currentItem.id)}></img>
+
+                                                <img class="img-fluid showcase-image" src={currentItem.image} onClick={() => handleClick(currentItem.id)}></img>
+
                                                 <p><strong>{currentItem.name}</strong></p>
                                             </div>
                                             <div class="row">
@@ -91,16 +103,18 @@ export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
                                             </div>
                                             <div class="row">
                                                 <div class="col">
-                                                <button class="showcase-button" onClick={() => handleClick(currentItem.id)}>Back</button>
+
+                                                    <button class="showcase-button" onClick={() => handleClick(currentItem.id)}>Back</button>
                                                 </div>
                                                 <div class="col">
-                                                <button class="showcase-button" onClick={() => handleUpdate()}>Change</button>
+                                                    <button class="showcase-button" onClick={() => handleUpdate()}>Change</button>
                                                 </div>
                                                 <div class="col">
-                                                <button class="showcase-button" onClick={() => handleAddToCart()}>Add To Cart</button>
+                                                    <button class="showcase-button" onClick={() => handleAddToCart()}>Add To Cart</button>
                                                 </div>
                                                 <div class="col">
-                                                <button class="showcase-button delete" onClick={handleDelete}>Delete</button>
+                                                    <button class="showcase-button delete" onClick={handleDelete}>Delete</button>
+
                                                 </div>
                                             </div>
                                         </div>
