@@ -17,6 +17,7 @@ function Form({ toAdd, setToAdd }) {
       category,
       image,
     }
+
     // fetch post request to add to inventory
     await fetch('http://localhost:3000/api/items', {
       method: "POST",

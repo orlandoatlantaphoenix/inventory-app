@@ -30,7 +30,9 @@ export const App = () => {
 		}
 	}
 
+
 	useEffect(() => { // to call render on currentItem and toAdd 
+
 		fetchItems();
 
 	}, [currentItem, toAdd]);
@@ -50,6 +52,7 @@ export const App = () => {
 
 
 
+
 					{viewCart ? (<Cart setCart={setCart} setViewCart={setViewCart} cart={cart} />) : // ternary to render cart if viewCart is true
 						(<>
 							{toSearch ? (<Search items={items} search={search} // ternary to render search if toSearch is true
@@ -57,6 +60,7 @@ export const App = () => {
 								setSearching={setSearching} currentItem={currentItem} setCurrentItem={setCurrentItem} />)
 								: (<>
 									{!toAdd // ternary to render update if toAdd is true
+
 										? (
 											<>
 												<div class="row p-2 button-bar">

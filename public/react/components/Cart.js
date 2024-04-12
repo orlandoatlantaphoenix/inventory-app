@@ -57,7 +57,9 @@ const Cart = ({ setCart, setViewCart, cart }) => {
 
     return (
         <>
+
             {success ? ( // ternary for sucessful purchases shows retrieved order
+
                 <>
                     <div class="container">
                         <section>
@@ -71,10 +73,13 @@ const Cart = ({ setCart, setViewCart, cart }) => {
                                 return (
                                     <div key={index}>
                                         <img src={item.image} />
+
+
                                         <p>Name: {item.name}</p>
                                         <p>Description: {item.description}</p>
                                         <p>Price: {item.price}</p>
                                         <p>Category: {item.category}</p>
+
                                     </div>
                                 )
                             })}</h3>
@@ -118,6 +123,7 @@ const Cart = ({ setCart, setViewCart, cart }) => {
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </>
                     )}

@@ -28,6 +28,7 @@ function UpdateForm({ currentItem, setCurrentItem }) {
   // input boxes to update single items
   return (
     <div class="col form">
+
       <form onSubmit={submitHandler}>
         <div class="row">
           <input
@@ -73,6 +74,7 @@ function UpdateForm({ currentItem, setCurrentItem }) {
           <button type="submit">Submit</button>
         </div>
       </form>
+
     </div>
   )
 }
