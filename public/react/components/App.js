@@ -6,6 +6,7 @@ import apiURL from '../api';
 import { ItemList } from './ItemList';
 import { Item } from './Item';
 import Form from './Form.js'
+import { Header } from './Header.js';
 
 export const App = () => {
 
@@ -58,13 +59,7 @@ export const App = () => {
 							<button onClick={() => handleClick()}>Add to our inventory</button>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-4 offset-md-4">
-							<h1>Store</h1>
-							<h2>Our inventory is 🔥</h2>
-						</div>
-					</div>
-
+					<Header />
 					{!toAdd
 						? (
 							<>
