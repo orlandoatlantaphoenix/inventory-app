@@ -57,49 +57,67 @@ const Cart = ({ setCart, setViewCart, cart }) => {
     return (
         <>
             {success ? (
-                <section>
-                    <button onClick={() => setSuccess(false)}>Back</button>
-                    <h1>Success!</h1>
-                    <h3>Order successfully created.</h3>
-                    <h3>Order Info</h3>
-                    <h3>Order Total: {order.total}</h3>
-                    <h3>Order ID: {order.id}</h3>
-                    <h3>Items: {order.items.map((item, index) => {
-                        return (
-                            <div key={index}>
-                                <img src={item.image} />
-                                <p>Name: {item.name}</p>
-                                <p>Description: {item.description}</p>
-                                <p>Price: {item.price}</p>
-                                <p>Category: {item.category}</p>
-                            </div>
-                        )
-                    })}</h3>
+                <>
+                    <div class="container">
+                        <section>
 
-                </section>) :
+                            <h1>Success!</h1>
+                            <h3>Order successfully created.</h3>
+                            <h3>Order Info</h3>
+                            <h3>Order Total: {order.total}</h3>
+                            <h3>Order ID: {order.id}</h3>
+                            <h3>Items: {order.items.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        <img src={item.image} />
+                                        <p>Name: {item.name}</p>
+                                        <p>Description: {item.description}</p>
+                                        <p>Price: {item.price}</p>
+                                        <p>Category: {item.category}</p>
+                                    </div>
+                                )
+                            })}</h3>
+                        <button class="back-button" onClick={() => setSuccess(false)}>Back</button>
+                        </section>
+                    </div>
+                </>) :
                 (<>
                     {cart.length == 0 ? (
                         <>
                             <h1>Your Cart is Empty</h1>
-                            <button onClick={() => setViewCart(false)}>Back</button>
+                            <button class="back-button" onClick={() => setViewCart(false)}>Back</button>
                         </>) : (
-                        <>
-                            <h1>Cart</h1>
-                            <button onClick={() => setViewCart(false)}>Back</button>
-                            <button onClick={handlePurchase}>Purchase</button>
+                        <>  
+                        <div class="container">
+                            <div class="col">
+                            <h1 class="form-title">Cart</h1>
+
                             <h3>Total: {total}</h3>
                             {cart.map((item, index) => {
-                                return (
+                                return (<>
+                                <div class="row ">
                                     <section key={index}>
-                                        <img src={item.image} />
-                                        <button onClick={() => setCart(cart.filter((item) => item != cart[index]))}>REMOVE</button>
+                                        <img class="showcase-image"src={item.image} />
+                                        <button onClick={() => setCart(cart.filter((item) => item != cart[index]))}>X</button>
                                         <p>Name: {item.name}</p>
                                         <p>Description: {item.description}</p>
                                         <p>Price: {item.price}</p>
                                         <p>Category: {item.category}</p>
                                     </section>
+                                    </div>
+                                    </>
                                 )
                             })}
+                            <div class="row">
+                                <div class ="col">
+                            <button class="showcase-button"onClick={handlePurchase}>Purchase</button>
+                            </div>
+                            <div class="col">
+                            <button class="back-button m-0" onClick={() => setViewCart(false)}>Back</button>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
                         </>
                     )}
 

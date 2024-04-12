@@ -5,6 +5,7 @@ import apiURL from '../api';
 import { ItemList } from './ItemList';
 import { Item } from './Item';
 import Form from './Form.js'
+import { Header } from './Header.js';
 import Cart from './Cart.js'
 import { Search } from './Search.js';
 export const App = () => {
@@ -57,35 +58,51 @@ export const App = () => {
 	if (!currentItem) {
 		return (
 			<main>
-				
-			
-				
-				<h1>Store</h1>
-				<h2>Our inventory is 🔥</h2>
-				{ viewCart ? (<Cart setCart={setCart} setViewCart={setViewCart} cart={cart}/>) : 
-				(<>
-					{toSearch ? (<Search items={items} search={search} 
-					setSearch={setSearch} setToSearch={setToSearch} searching={searching} 
-					setSearching={setSearching} currentItem={currentItem} setCurrentItem={setCurrentItem}/> )
-					: ( <>
-						 {!toAdd
-							? (
-								<>
-									<button onClick={() => setViewCart(true)}>{cart.length > 0 ? `Cart (${cart.length})` : `Cart` }</button>
-									<button onClick={() => handleClick()}>Add to our inventory</button>
-									<button onClick={() => setToSearch(true)}>Search</button>
-									<ItemList items={items} setCurrentItem={setCurrentItem} />
-								</>
+				<div class="container">
 
-							) : (
-								<>
-									<h3>Add To it!</h3>
-									<Form toAdd={toAdd} setToAdd={setToAdd} />
-									<button onClick={handleClick}>Back</button>
-								</>
-							)}
+
+
+					{viewCart ? (<Cart setCart={setCart} setViewCart={setViewCart} cart={cart} />) :
+						(<>
+							{toSearch ? (<Search items={items} search={search}
+								setSearch={setSearch} setToSearch={setToSearch} searching={searching}
+								setSearching={setSearching} currentItem={currentItem} setCurrentItem={setCurrentItem} />)
+								: (<>
+									{!toAdd
+										? (
+											<>
+												<div class="row p-2 button-bar">
+													<div class="col-md-4 offset-md-8 ">
+														<button onClick={() => handleClick()}>Add to our inventory</button>
+
+														<button onClick={() => setToSearch(true)}>Search</button>
+
+														<button onClick={() => setViewCart(true)}>{cart.length > 0 ? `Cart (${cart.length})` : `Cart`}</button>
+													</div>
+												</div>
+												<Header />
+												<ItemList items={items} setCurrentItem={setCurrentItem} />
+											</>
+
+										) : (
+											<>
+												<div class="col">
+													<div class="row">
+														<h3 class="form-title">Add To it!</h3>
+													</div>
+													<div class="row">
+														<Form toAdd={toAdd} setToAdd={setToAdd} />
+													</div>
+
+													<div class="row">
+														<button class="back-button" onClick={handleClick}>Back</button>
+													</div>
+												</div>
+											</>
+										)}
+								</>)}
 						</>)}
-				</>)}
+				</div>
 			</main>
 		)
 	} else {
