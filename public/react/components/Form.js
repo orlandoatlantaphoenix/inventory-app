@@ -17,7 +17,7 @@ function Form({ toAdd, setToAdd }) {
       category,
       image,
     }
-
+    // fetch post request to add to inventory
     await fetch('http://localhost:3000/api/items', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ function Form({ toAdd, setToAdd }) {
     setCategory("")
     setImage("")
   }
-
+  // input boxes to submit add to inventory
   return (
     <div class="col form">
       <form onSubmit={submitHandler}>

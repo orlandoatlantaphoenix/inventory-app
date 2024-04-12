@@ -15,7 +15,7 @@ const Cart = ({ setCart, setViewCart, cart }) => {
         total += item.price;
     })
 
-    const handleRetrieveOrder = async (orderId) => {
+    const handleRetrieveOrder = async (orderId) => { // retireves the order created
         try {
             const retrievedOrder = await fetch(`${apiURL}/orders/${orderId}`)
             const orderData = await retrievedOrder.json();
@@ -28,9 +28,10 @@ const Cart = ({ setCart, setViewCart, cart }) => {
         }
     }
 
-    const handlePurchase = async () => {
+    const handlePurchase = async () => { // purchase request that creates new
         try {
             const newOrder = {
+                // user will be set on sign in -wip
                 user: null,
                 total: total,
                 items: cart,
@@ -56,7 +57,7 @@ const Cart = ({ setCart, setViewCart, cart }) => {
 
     return (
         <>
-            {success ? (
+            {success ? ( // ternary for sucessful purchases shows retrieved order
                 <>
                     <div class="container">
                         <section>
@@ -77,46 +78,46 @@ const Cart = ({ setCart, setViewCart, cart }) => {
                                     </div>
                                 )
                             })}</h3>
-                        <button class="back-button" onClick={() => setSuccess(false)}>Back</button>
+                            <button class="back-button" onClick={() => setSuccess(false)}>Back</button>
                         </section>
                     </div>
                 </>) :
                 (<>
-                    {cart.length == 0 ? (
+                    {cart.length == 0 ? ( // handles the case if the cart is empty
                         <>
                             <h1>Your Cart is Empty</h1>
                             <button class="back-button" onClick={() => setViewCart(false)}>Back</button>
                         </>) : (
-                        <>  
-                        <div class="container">
-                            <div class="col">
-                            <h1 class="form-title">Cart</h1>
+                        <>
+                            <div class="container">
+                                <div class="col">
+                                    <h1 class="form-title">Cart</h1>
 
-                            <h3>Total: {total}</h3>
-                            {cart.map((item, index) => {
-                                return (<>
-                                <div class="row ">
-                                    <section key={index}>
-                                        <img class="showcase-image"src={item.image} />
-                                        <button onClick={() => setCart(cart.filter((item) => item != cart[index]))}>X</button>
-                                        <p>Name: {item.name}</p>
-                                        <p>Description: {item.description}</p>
-                                        <p>Price: {item.price}</p>
-                                        <p>Category: {item.category}</p>
-                                    </section>
+                                    <h3>Total: {total}</h3>
+                                    {cart.map((item, index) => {
+                                        return (<>
+                                            <div class="row ">
+                                                <section key={index}>
+                                                    <img class="showcase-image" src={item.image} />
+                                                    <button onClick={() => setCart(cart.filter((item) => item != cart[index]))}>X</button>
+                                                    <p>Name: {item.name}</p>
+                                                    <p>Description: {item.description}</p>
+                                                    <p>Price: {item.price}</p>
+                                                    <p>Category: {item.category}</p>
+                                                </section>
+                                            </div>
+                                        </>
+                                        )
+                                    })}
+                                    <div class="row">
+                                        <div class="col">
+                                            <button class="showcase-button" onClick={handlePurchase}>Purchase</button>
+                                        </div>
+                                        <div class="col">
+                                            <button class="back-button m-0" onClick={() => setViewCart(false)}>Back</button>
+                                        </div>
                                     </div>
-                                    </>
-                                )
-                            })}
-                            <div class="row">
-                                <div class ="col">
-                            <button class="showcase-button"onClick={handlePurchase}>Purchase</button>
-                            </div>
-                            <div class="col">
-                            <button class="back-button m-0" onClick={() => setViewCart(false)}>Back</button>
-                            </div>
-                            </div>
-                            </div>
+                                </div>
                             </div>
                         </>
                     )}

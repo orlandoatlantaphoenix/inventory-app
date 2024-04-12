@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { SaucesList } from './SaucesList';
 // import and prepend the api url to any fetch calls
 import apiURL from '../api';
 import { ItemList } from './ItemList';
@@ -20,7 +19,7 @@ export const App = () => {
 	const [search, setSearch] = useState("")
 	const [searching, setSearching] = useState(false)
 
-	async function fetchItems() {
+	async function fetchItems() { //fetching itms in database to save items to state
 		try {
 			const response = await fetch(`${apiURL}/items`);
 			const itemData = await response.json();
@@ -31,23 +30,12 @@ export const App = () => {
 		}
 	}
 
-	async function fetchItem() {
-		try {
-			const response = await fetch(`${apiURL}/items/${currentItemId}`);
-			const itemData = await response.json();
-
-			setItem(itemData);
-		} catch (err) {
-			console.log("Oh no an error! ", err)
-		}
-	}
-
-	useEffect(() => {
+	useEffect(() => { // to call render on currentItem and toAdd 
 		fetchItems();
 
 	}, [currentItem, toAdd]);
 
-	function handleClick() {
+	function handleClick() { // handle click to add to inventory
 		if (!toAdd) {
 			setToAdd(true)
 		} else {
@@ -55,20 +43,20 @@ export const App = () => {
 		}
 	}
 
-	if (!currentItem) {
+	if (!currentItem) { // shows list of items if currentItem is false, shows 1 item if true
 		return (
 			<main>
 				<div class="container">
 
 
 
-					{viewCart ? (<Cart setCart={setCart} setViewCart={setViewCart} cart={cart} />) :
+					{viewCart ? (<Cart setCart={setCart} setViewCart={setViewCart} cart={cart} />) : // ternary to render cart if viewCart is true
 						(<>
-							{toSearch ? (<Search items={items} search={search}
+							{toSearch ? (<Search items={items} search={search} // ternary to render search if toSearch is true
 								setSearch={setSearch} setToSearch={setToSearch} searching={searching}
 								setSearching={setSearching} currentItem={currentItem} setCurrentItem={setCurrentItem} />)
 								: (<>
-									{!toAdd
+									{!toAdd // ternary to render update if toAdd is true
 										? (
 											<>
 												<div class="row p-2 button-bar">
