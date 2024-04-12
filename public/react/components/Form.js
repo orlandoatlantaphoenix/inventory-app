@@ -1,15 +1,15 @@
 import { useState } from "react"
 
-function Form({toAdd, setToAdd}) {
+function Form({ toAdd, setToAdd }) {
   const [name, setName] = useState("")
   const [price, setPrice] = useState(Number)
   const [description, setDescription] = useState("")
-  const [category, setCategory] = useState("") 
+  const [category, setCategory] = useState("")
   const [image, setImage] = useState("")
 
   async function submitHandler(e) {
     e.preventDefault()
-  
+
     const newItem = {
       name,
       price,
@@ -17,10 +17,10 @@ function Form({toAdd, setToAdd}) {
       category,
       image,
     }
-  
+
     await fetch('http://localhost:3000/api/items', {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newItem)
     })
 
@@ -32,39 +32,53 @@ function Form({toAdd, setToAdd}) {
   }
 
   return (
-    <form onSubmit={submitHandler}>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        />
-      <input
-        type="number"
-        placeholder="Price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+    <div class="col form">
+      <form onSubmit={submitHandler}>
+        <div class="row">
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-        <input
-          type="text"
-          placeholder="Image"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+        </div>
+        <div class="row">
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            placeholder="Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div class="row">
+          <input
+            type="text"
+            placeholder="Image"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+        </div>
+        <div class="row">
           <button type="submit">Submit</button>
-    </form>
+        </div>
+      </form>
+    </div>
   )
 }
 

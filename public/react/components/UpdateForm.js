@@ -27,39 +27,53 @@ function UpdateForm({currentItem, setCurrentItem}) {
   }
 
   return (
+    <div class="col form">
     <form onSubmit={submitHandler}>
+      <div class="row">
       <input
         type="text"
         placeholder={currentItem.name}
         value={name}
         onChange={(e) => setName(e.target.value)}
         />
+        </div>
+        <div class="row">
       <input
         type="number"
         placeholder={currentItem.price}
         value={price}
         onChange={(e) => setPrice(e.target.value)}
         />
+        </div>
+        <div class="row">
         <input
           type="text"
           placeholder={currentItem.category}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         />
+        </div>
+        <div class="row">
         <input
           type="text"
           placeholder={currentItem.description}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           />
+          </div>
+          <div class="row">
         <input
           type="text"
           placeholder={currentItem.image}
           value={image}
           onChange={(e) => setImage(e.target.value)}
           />
+          </div>
+          <div class="row">
           <button type="submit">Submit</button>
+          </div>
     </form>
+    </div>
   )
 }
 

@@ -1,28 +1,28 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import apiURL from "../api";
 import UpdateForm from './UpdateForm.js'
 
-export const Item = ({cart, setCart, item, currentItem, setCurrentItem}) => {
+export const Item = ({ cart, setCart, item, currentItem, setCurrentItem }) => {
     const [toUpdate, setToUpdate] = useState(false)
 
-    async function fetchItem(id){
-		try {
-			const response = await fetch(`${apiURL}/items/${id}`);
-			const itemData = await response.json();
-			console.log(itemData)
-			setCurrentItem(itemData);
-		} catch (err) {
-			console.log("Oh no an error! ", err)
-		}
-	}
+    async function fetchItem(id) {
+        try {
+            const response = await fetch(`${apiURL}/items/${id}`);
+            const itemData = await response.json();
+            console.log(itemData)
+            setCurrentItem(itemData);
+        } catch (err) {
+            console.log("Oh no an error! ", err)
+        }
+    }
 
-    function handleClick (id) {
+    function handleClick(id) {
         if (!currentItem) {
             fetchItem(id)
         } else {
             setCurrentItem(false)
         }
-    } 
+    }
 
     const handleDelete = async () => {
         try {
@@ -36,7 +36,7 @@ export const Item = ({cart, setCart, item, currentItem, setCurrentItem}) => {
         }
     }
     function handleUpdate() {
-        if (!toUpdate){
+        if (!toUpdate) {
             setToUpdate(true)
         } else {
             setToUpdate(false)
@@ -44,45 +44,81 @@ export const Item = ({cart, setCart, item, currentItem, setCurrentItem}) => {
     }
 
     const handleAddToCart = () => {
-        setCart([...cart, currentItem ])
+        setCart([...cart, currentItem])
         alert(`Successfully added to cart`);
     }
 
     return (
         <>
-            { !currentItem
-            ?( 
-            <div>
-                <img src={item.image} onClick = {() => handleClick(item.id)}></img>
-                <p><strong>{item.name}</strong></p>
-                <p>{item.price}</p> 
-                <p>{item.category}</p>
-                <button onClick={() => handleClick(item.id)}>View</button> 
-            </div>)
-            :(
-            <div> 
-                {!toUpdate
-                ?(
-                    <>
-                        <button onClick={handleDelete}>DELETE</button>
-                        <img src={currentItem.image} onClick = {() => handleClick(currentItem.id)}></img>
-                        <p><strong>{currentItem.name}</strong></p>
-                        <p>{currentItem.description}</p>
-                        <p>{currentItem.price}</p> 
-                        <p>{currentItem.category}</p>
-                        <button onClick = {() => handleClick(currentItem.id)}>Back</button>
-                        <button onClick = {() => handleUpdate()}>Change</button>
-                        <button onClick = {() => handleAddToCart()}>Add To Cart</button>
-                    </>
-                ):(
-                    <>
-                        <UpdateForm currentItem={currentItem} setCurrentItem={setCurrentItem}/>
-                        <button onClick = {() => handleUpdate()}>Back</button>
-                    </>
-                )
-                }
-            </div>
-            )}
+            {!currentItem
+                ? (
+                    <div class="container item">
+                        <div class="col">
+                            <div class="row-md-4 offset-md-2">
+                                <img class="img-fluid thumbnail" src={item.image} onClick={() => handleClick(item.id)}></img>
+                            </div>
+                            <div class="row-md-4 offset-md-2 mx-auto">
+                                <p><strong>{item.name}</strong></p>
+                            </div>
+                            <div class="row row-md-4 offset-md-2 mt-5 mx-auto">
+
+                                <p>{item.price}</p>
+
+
+                                <p>{item.category}</p>
+
+                            </div>
+                            <div class="row-md-2 mt-4">
+                                <button onClick={() => handleClick(item.id)}>View</button>
+                            </div>
+                        </div>
+                    </div>)
+                : (
+                    <div>
+                        {!toUpdate
+                            ? (
+                                <>
+                                    <div class="container current-item">
+                                        <div class="col p-4 text-center">
+                                            <div class="row">
+                                                <img class="img-fluid showcase-image"  src={currentItem.image} onClick={() => handleClick(currentItem.id)}></img>
+                                                <p><strong>{currentItem.name}</strong></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>{currentItem.description}</p>
+                                                <p>{currentItem.price}</p>
+                                                <p>{currentItem.category}</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                <button class="showcase-button" onClick={() => handleClick(currentItem.id)}>Back</button>
+                                                </div>
+                                                <div class="col">
+                                                <button class="showcase-button" onClick={() => handleUpdate()}>Change</button>
+                                                </div>
+                                                <div class="col">
+                                                <button class="showcase-button" onClick={() => handleAddToCart()}>Add To Cart</button>
+                                                </div>
+                                                <div class="col">
+                                                <button class="showcase-button delete" onClick={handleDelete}>Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div class="container">
+                                        <div class="col">
+                                            <UpdateForm currentItem={currentItem} setCurrentItem={setCurrentItem} />
+                                        </div>
+                                        <button class="back-button" onClick={() => handleUpdate()}>Back</button>
+                                    </div>
+                                </>
+                            )
+                        }
+                    </div>
+                )}
         </>
     )
 }
