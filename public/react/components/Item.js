@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import apiURL from "../api";
-export const Item = ({ item, currentItem, setCurrentItem }) => {
+import UpdateForm from './UpdateForm.js'
+
+export const Item = ({cart, setCart, item, currentItem, setCurrentItem}) => {
+    const [toUpdate, setToUpdate] = useState(false)
 
     async function fetchItem(id) {
         try {
@@ -32,6 +35,18 @@ export const Item = ({ item, currentItem, setCurrentItem }) => {
             alert(`There was an error deleting your item`);
         }
     }
+    function handleUpdate() {
+        if (!toUpdate){
+            setToUpdate(true)
+        } else {
+            setToUpdate(false)
+        }
+    }
+
+    const handleAddToCart = () => {
+        setCart([...cart, currentItem ])
+        alert(`Successfully added to cart`);
+    }
 
     return (
         <>
@@ -59,14 +74,27 @@ export const Item = ({ item, currentItem, setCurrentItem }) => {
                         </div>
                     </div>)
                 : (
-                    <div>
-                        <button onClick={handleDelete}>DELETE</button>
-                        <img src={currentItem.image}></img>
-                        <p><strong>{currentItem.name}</strong></p>
-                        <p>{currentItem.description}</p>
-                        <p>{currentItem.price}</p>
-                        <p>{currentItem.category}</p>
-                        <button onClick={() => handleClick(currentItem.id)}>Back</button>
+                    <div> 
+                {!toUpdate
+                ?(
+                    <>
+                                <button onClick={handleDelete}>DELETE</button>
+                                <img src={currentItem.image} onClick = {() => handleClick(currentItem.id)}></img>
+                                <p><strong>{currentItem.name}</strong></p>
+                                <p>{currentItem.description}</p>
+                                <p>{currentItem.price}</p>
+                                <p>{currentItem.category}</p>
+                                <button onClick={() => handleClick(currentItem.id)}>Back</button>
+                        <button onClick = {() => handleUpdate()}>Change</button>
+                        <button onClick = {() => handleAddToCart()}>Add To Cart</button>
+                    </>
+                ):(
+                    <>
+                        <UpdateForm currentItem={currentItem} setCurrentItem={setCurrentItem}/>
+                        <button onClick = {() => handleUpdate()}>Back</button>
+                    </>
+                )
+                }
                     </div>
                 )}
         </>
